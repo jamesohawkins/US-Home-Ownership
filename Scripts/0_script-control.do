@@ -41,7 +41,7 @@ global output "${directory}/Output"
 /* User: Set ACS file extract number from IPUMS to the number saved in your
    repository. Due to file size restrictions by IPUMS, I download two separate
    extracts. For additional instructions see the Github repository. */
-global usa_file1 = "[INSERT EXTRACT NAME]" // NOTE: CHANGE TO YOUR EXTRACT NAME
+global usa_file1 = "usa_00097" // NOTE: CHANGE TO YOUR EXTRACT NAME
 **global usa_file2 = "usa_00093" // split extract for extended analysis
 
 // Set seed
