@@ -1,7 +1,11 @@
-# Analysis of Homeownership Rates in the United States
+![First Figure](https://github.com/jamesohawkins/US-Home-Ownership/blob/main/Output/main_1980and2021.png)
 
 # About the project
 This repository includes the necessary [Stata](https://www.stata.com/) code and instructions for replicating the results from [The Berkeley Institute for Young American's](http://youngamericans.berkeley.edu/) analysis of homeownership rates over age and time.
+
+- [Methodology](#methodology)
+- [Benchmarks](#benchmarks)
+- [Replicating the Results](#replicating-the-results)
 
 # Methodology
 I use data from IPUMS-USA to visualize homeownership rates across time and the age distribution. I use the Census-defined homeownership variable ([OWNERSHP](https://usa.ipums.org/usa-action/variables/OWNERSHP#description_section)), which categorizes respondents as 1 if they reside in an owner-occupied (either owned outright or mortgaged) household or 0 if they're renting. I restrict the sample to households (non-group qarters), respondents age 21 or older, and the household's "householder" (otherwise known as "head of household" or "reference person"). I weight the analysis based on the Census-provided household weight variable ([HHWT](https://usa.ipums.org/usa-action/variables/HHWT#description_section)) to maintain the representativeness of the sample as it relates to the population of households in the U.S. In instances where I calculate standard errors, I use the [IPUMS-recommended](https://usa.ipums.org/usa/complex_survey_vars/userNotes_variance.shtml) survey specification in Stata based on the [CLUSTER](https://usa.ipums.org/usa-action/variables/CLUSTER#description_section), [STRATA](https://usa.ipums.org/usa-action/variables/STRATA#description_section), and [HHWT](https://usa.ipums.org/usa-action/variables/HHWT#description_section) variables. In summary, this analysis measures the weighted percentage of householders in each age group who own a home, and changes in this percentage across time.
@@ -82,5 +86,5 @@ The only user-required change to the scripts necessary to replicate the main ana
 ## Runtime
 On a PC with an Intel i7-11700, 64GB ram, and running 64-bit Windows 11 the code executed in approximately 46 minutes. The longest chunk of the code is to produce the results for the second figure, which is based on the `svyset` and `svy` commands in Stata to produce accurate standard errors.
 
-## Ackowledgments
-I am grateful to Sarah Swanbeck for reviewing and providing feedback on all stages of the analysis, and [Jesús Guzmán](https://github.com/jesus-guzman) and [Nicholas Adams-Cohen](https://github.com/njadamscohen) for helpful suggestions to improve the readability of the visualizations. 
+# Ackowledgments
+I am grateful to Sarah Swanbeck for reviewing and providing feedback on all stages of the analysis, and [Jesús Guzmán](https://github.com/jesus-guzman) and [Nicholas Adams-Cohen](https://github.com/njadamscohen) for helpful suggestions to improve the readability of the visualizations. All errors are my own.
