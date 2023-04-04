@@ -13,26 +13,26 @@ I use data from IPUMS-USA to visualize homeownership rates across time and the a
 A note on householders: The most consequential methodological choice is to restrict the sample to householders. [IPUMS notes](https://usa.ipums.org/usa-action/variables/RELATE#comparability_section) that:
 >Beginning in 1980 the census questionnaire no longer referred to a "head of household", specifying instead the designation of "person one"--the first person listed on the census form. This reference person could be any household member in whose name the property was owned or rented. If no such person was present, any adult could be selected. Prior to 1970, enumerators were instructed to record the male as the head of household for all married couples, regardless of the couple's designation of a head.
 
-Thus, my comparison between 1980 and 2021 is using a consistent definition of householders across time; however, based on Census' methodology for determining the householder in a household, it is possible that there are inconsistencies in who is being designated as a householder across time (for instance, if true the homeowner(s) are more likely to be absent from the household in recent years, this could bias our results, particularly when analyzing by age group). Still, I use Census' preferred methodology for measuring homeownership rates using the American Community Survey (for instance, see [Figure 2 at this link](https://www.census.gov/library/stories/2022/11/homeownership-by-young-households-below-pre-great-recession-levels.html)). As a quality control test, I benchmark my results against the Census Bureau's [publicly-reported results](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acsbr-010.pdf) for 2005-2019 and replicate these results with a small margin of error.
+Thus, my comparison between 1980 and 2021 is using a consistent definition of householders across time. Still, it is important to note that if there are unknown inconsistencies in who is being designated as a householder across time, especially inconsistencies by age, this would bias our results (for instance, if the true homeowner(s) are more/less likely to be absent from the household in more recent years). Still, I use Census' preferred methodology for measuring homeownership rates using the American Community Survey (for instance, see [Figure 2 at this link](https://www.census.gov/library/stories/2022/11/homeownership-by-young-households-below-pre-great-recession-levels.html)). As a quality control test, I benchmark my results against the Census Bureau's [publicly-reported results](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acsbr-010.pdf) for 2005-2019 and replicate these results with little-to-no error.
 
 ### Benchmarks
 | Year  | Estimates based on Census  | Estimates based on IPUMS-USA |
 | ----------- | ----------- | ----------- |
-| 2005 | .669 | .669 |
-| 2006 | .673 | .673 |
-| 2007 | .672 | .672 |
-| 2008 | .666 | .666 |
-| 2009 | .659 | .659 |
-| 2010 | .654 | .654 |
-| 2011 | .647 | .646 |
-| 2012 | .64 | .639 |
-| 2013 | .636 | .635 |
-| 2014 | .632 | .631 |
-| 2015 | .631 | .63 |
-| 2016 | .632 | .631 |
-| 2017 | .639 | .639 |
-| 2018 | .64 | .639 |
-| 2019 | .642 | .641 |
+| 2005 | 66.9% | 66.9% |
+| 2006 | 67.3% | 67.3% |
+| 2007 | 67.2% | 67.2% |
+| 2008 | 66.6% | 66.6% |
+| 2009 | 65.9% | 65.9% |
+| 2010 | 65.4% | 65.4% |
+| 2011 | 64.7% | 64.6% |
+| 2012 | 64.0% | 63.9% |
+| 2013 | 63.6% | 63.5% |
+| 2014 | 63.2% | 63.1% |
+| 2015 | 63.1% | 63.0% |
+| 2016 | 63.2% | 63.1% |
+| 2017 | 63.9% | 63.9% |
+| 2018 | 64.0% | 63.9% |
+| 2019 | 64.2% | 64.1% |
 
 *Note: Census estimates are from page 11 of the following [link](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acsbr-010.pdf).*
 
