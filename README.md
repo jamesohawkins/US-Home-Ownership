@@ -4,7 +4,6 @@
 This repository includes the necessary [Stata](https://www.stata.com/) code and instructions for replicating the results from [The Berkeley Institute for Young American's](http://youngamericans.berkeley.edu/) analysis of homeownership rates over age and time.
 
 - [Methodology](#methodology)
-- [Benchmarks](#benchmarks)
 - [Replicating the Results](#replicating-the-results)
 
 # Methodology
