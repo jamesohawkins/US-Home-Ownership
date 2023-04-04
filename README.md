@@ -87,4 +87,4 @@ The only user-required change to the scripts necessary to replicate the main ana
 On a PC with an Intel i7-11700, 64GB ram, and running 64-bit Windows 11 the code executed in approximately 46 minutes. The longest chunk of the code is to produce the results for the second figure, which is based on the `svyset` and `svy` commands in Stata to produce accurate standard errors.
 
 # Ackowledgments
-I am grateful to Sarah Swanbeck for reviewing and providing feedback on all stages of the analysis, and [Jesús Guzmán](https://github.com/jesus-guzman) and [Nicholas Adams-Cohen](https://github.com/njadamscohen) for helpful suggestions to improve the readability of the visualizations. All errors are my own.
+I am grateful to Sarah Swanbeck for reviewing and providing feedback on all stages of the analysis, and [Jesús Guzmán](https://github.com/jesus-guzman) and [Nicholas Adams-Cohen](https://github.com/njadamscohen) for helpful suggestions to improve the readability of the visualizations. All errors or omissions are my own.
