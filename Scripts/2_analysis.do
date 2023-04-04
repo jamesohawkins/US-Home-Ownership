@@ -80,6 +80,12 @@ collapse (mean) ownd [pw = hhwt], by(year age)
 * reshape estimates
 reshape wide ownd, i(age) j(year)
 
+// Format estimates
+label drop AGE
+lab def age_lbl ///
+	90 "90+"
+lab val age age_lbl
+
 // Visualization
 * location for labels
 sum ownd1980 if age == 90
@@ -129,7 +135,8 @@ graphregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(w
 plotregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
 graphregion(margin(r+8))
 cd "$output"
-graph export main_1980and2021.png, replace
+graph export main_1980and2021.png, replace height(2500) width(3700)
+export delimited main_1980and2021.csv, replace
 
 
 // 2b. 1980 vs 2021
@@ -154,11 +161,12 @@ rename _margin estimates
 rename _ci_lb estimates_lb
 rename _ci_ub estimates_ub
 rename _by1 age
+label drop AGE
+lab def age_lbl ///
+	90 "90+"
+lab val age age_lbl
 
 // Additional formatting for graph
-set obs 72
-replace age = 91 if _n == 71
-replace age = 92 if _n == 72
 gen asterisk = "*" if _pvalue < .05
 gen asterisk_pos = estimates - .0027
 
@@ -191,13 +199,16 @@ ytitle("") ///
 yscale(lstyle(none)) ///
 ylabel(-.15 "-15ppt" -.1 "-10ppt" -.05 "-5ppt" 0 "No change" .05 "+5ppt" .1 "+10ppt" .15 "+15ppt", angle(0) gmax gmin glpattern(solid) glcolor(gs9%15) glwidth(vthin) labcolor("59 126 161") labsize(2.5) tlength(0) tlcolor(gs9%15)) ///
 legend(off) ///
-note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato: U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
+note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato:U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
 caption("@jamesohawkins {fontface Lato:on behalf of} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
 text(.008 19.15 "Increases in homeownership" "rates since 1980", color("0 165 152") size(vsmall) placement(n) justification(center) orient(vertical)) ///
 text(-.008 19.15 "Decreases in homeownership" "rates since 1980", color("238 31 96") size(vsmall) placement(s) justification(center) orient(vertical)) ///
 text(-.096 54 "{it:Asterisk (*) denotes statistically significant change since 1980}", color(gs10) size(vsmall) placement(e) justification(left) orient(horizontal)) ///
 graphregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
 plotregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
-graphregion(margin(r+1))
+graphregion(margin(r+3))
 cd "$output"
 graph export main_1980vs2021.png, replace height(2500) width(3700)
+
+keep estimates* age
+export delimited main_1980vs2021.csv, replace
