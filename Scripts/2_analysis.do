@@ -86,6 +86,42 @@ lab def age_lbl ///
 	90 "90+"
 lab val age age_lbl
 
+
+// Added
+* location for labels
+sum ownd1980 if age == 90
+local text1 = r(mean)
+* graph notes
+linewrap, maxlength(140) name("notes") stack longstring("Since 1980 the 'head of household' or 'householder' is  the individual in whose name the property was owned or rented. If that individual was not present, any household member could be listed as the householder. Homeowners include householders who either owned outright or mortgaged their property. All other householders are renters.")
+local notes = `" "Notes: {fontface Lato:`r(notes1)'}""'
+local y = r(nlines_notes)
+forvalues i = 2/`y' {
+	local notes = `"`notes' "{fontface Lato:`r(notes`i')'}""'
+}
+if `y' < 5 {
+	local notes = `"`notes' """'
+}
+twoway (connected ownd1980 age, lpattern(solid) lcolor("217 117 31") mcolor("217 117 31") msize(tiny)) ///
+(connected ownd2021 age, lpattern(solid) lcolor("59 126 161%0") mcolor("59 126 161%0") msize(tiny)) ///
+, ///
+title("U.S. homeownership in 1980, by age", color("0 50 98") size(large) pos(11) justification(left)) ///
+subtitle("Homeownership rates (percentage of householders who own)", color("59 126 161") size(small) pos(11) justification(left)) ///
+xtitle("Age", color(gs6) margin(b-1 t-1)) xscale(lstyle(none)) ///
+xlabel(21 "21" 30 "30" 40 "40" 50 "50" 60 "60" 70 "70" 80 "80" 90 "90+", glcolor(gs9%0) labcolor(gs6) tlength(1.25) tlcolor(gs6%30)) xmtick(21(1)90, tlength(.75) tlcolor(gs9%30)) ///
+ytitle("") ///
+yscale(lstyle(none)) ///
+ylabel(.1 "10%" .2 "20%" .3 "30%" .4 "40%" .5 "50%" .6 "60%" .7 "70%" .8 "80%", angle(0) gmax gmin glpattern(solid) glcolor(gs9%15) glwidth(vthin) labcolor("59 126 161") labsize(2.5) tlength(0) tlcolor(gs9%15)) ///
+legend(off) ///
+note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato:U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
+caption("@jamesohawkins {fontface Lato:with} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
+text(`text1' 93 "1980", color("217 117 31") size(vsmall) placement(w) justification(right) orient(horizontal)) ///
+graphregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
+plotregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
+graphregion(margin(r+8))
+cd "$output"
+graph export main_1980.png, replace height(2500) width(3700)
+
+
 // Visualization
 * location for labels
 sum ownd1980 if age == 90
@@ -100,8 +136,11 @@ sum ownd2021 if age == 37
 local point_37_2021 = r(mean) + .01
 sum ownd2021 if age == 77
 local point_77_2021 = r(mean) - .01
-local text_37 = r(mean) - .16
+local text_37 = r(mean) - .158
+local text_37_2 = r(mean) - .31
 local text_77 = `point_77_1980' + .01
+local diff37 = abs(round(`point_37_2021' - `point_37_1980', .001)) * 100
+display `diff37' * 100
 * graph notes
 linewrap, maxlength(140) name("notes") stack longstring("Since 1980 the 'head of household' or 'householder' is  the individual in whose name the property was owned or rented. If that individual was not present, any household member could be listed as the householder. Homeowners include householders who either owned outright or mortgaged their property. All other householders are renters.")
 local notes = `" "Notes: {fontface Lato:`r(notes1)'}""'
@@ -112,13 +151,11 @@ forvalues i = 2/`y' {
 if `y' < 5 {
 	local notes = `"`notes' """'
 }
-twoway (line ownd1980 age, lpattern(longdash) lcolor("217 117 31")) ///
-(line ownd2021 age, lpattern(solid) lcolor("59 126 161")) ///
-(pcarrowi `point_37_1980' 37 `point_37_2021' 37, lcolor("238 31 96") lwidth(thin) barbsize(0) msize(1) mcolor("238 31 96")) ///
-(pcarrowi `point_77_1980' 77 `point_77_2021' 77, lcolor("0 165 152") lwidth(thin) barbsize(0) msize(1) mcolor("0 165 152")) ///
+twoway (connected ownd1980 age, lpattern(solid) lcolor("217 117 31") mcolor("217 117 31") msize(tiny)) ///
+(connected ownd2021 age, lpattern(solid) lcolor("59 126 161") mcolor("59 126 161") msize(tiny)) ///
 , ///
-title("The age distribution of U.S. homeownership over time", color("0 50 98") size(large) pos(11) justification(left)) ///
-subtitle("Homeownership rates in 1980 and 2021", color("59 126 161") size(small) pos(11) justification(left)) ///
+title("U.S. homeownership in 1980 and 2021, by age", color("0 50 98") size(large) pos(11) justification(left)) ///
+subtitle("Homeownership rates (percentage of householders who own)", color("59 126 161") size(small) pos(11) justification(left)) ///
 xtitle("Age", color(gs6) margin(b-1 t-1)) xscale(lstyle(none)) ///
 xlabel(21 "21" 30 "30" 40 "40" 50 "50" 60 "60" 70 "70" 80 "80" 90 "90+", glcolor(gs9%0) labcolor(gs6) tlength(1.25) tlcolor(gs6%30)) xmtick(21(1)90, tlength(.75) tlcolor(gs9%30)) ///
 ytitle("") ///
@@ -126,7 +163,60 @@ yscale(lstyle(none)) ///
 ylabel(.1 "10%" .2 "20%" .3 "30%" .4 "40%" .5 "50%" .6 "60%" .7 "70%" .8 "80%", angle(0) gmax gmin glpattern(solid) glcolor(gs9%15) glwidth(vthin) labcolor("59 126 161") labsize(2.5) tlength(0) tlcolor(gs9%15)) ///
 legend(off) ///
 note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato:U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
-caption("@jamesohawkins {fontface Lato:on behalf of} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
+caption("@jamesohawkins {fontface Lato:with} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
+text(`text1' 93 "1980", color("217 117 31") size(vsmall) placement(w) justification(right) orient(horizontal)) ///
+text(`text2' 93 "2021", color("59 126 161") size(vsmall) placement(w) justification(right) orient(horizontal)) ///
+graphregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
+plotregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
+graphregion(margin(r+8))
+cd "$output"
+graph export main_1980and2021.png, replace height(2500) width(3700)
+
+
+// Visualization
+* location for labels
+sum ownd1980 if age == 90
+local text1 = r(mean)
+sum ownd2021 if age == 90
+local text2 = r(mean)
+sum ownd1980 if age == 37
+local point_37_1980 = r(mean) - .01
+sum ownd1980 if age == 77
+local point_77_1980 = r(mean) + .01
+sum ownd2021 if age == 37
+local point_37_2021 = r(mean) + .01
+sum ownd2021 if age == 77
+local point_77_2021 = r(mean) - .01
+local text_37 = r(mean) - .158
+local text_37_2 = r(mean) - .31
+local text_77 = `point_77_1980' + .01
+local diff37 = abs(round(`point_37_2021' - `point_37_1980', .001)) * 100
+display `diff37' * 100
+* graph notes
+linewrap, maxlength(140) name("notes") stack longstring("Since 1980 the 'head of household' or 'householder' is  the individual in whose name the property was owned or rented. If that individual was not present, any household member could be listed as the householder. Homeowners include householders who either owned outright or mortgaged their property. All other householders are renters.")
+local notes = `" "Notes: {fontface Lato:`r(notes1)'}""'
+local y = r(nlines_notes)
+forvalues i = 2/`y' {
+	local notes = `"`notes' "{fontface Lato:`r(notes`i')'}""'
+}
+if `y' < 5 {
+	local notes = `"`notes' """'
+}
+twoway (connected ownd1980 age, lpattern(solid) lcolor("217 117 31") mcolor("217 117 31") msize(tiny)) ///
+(connected ownd2021 age, lpattern(solid) lcolor("59 126 161") mcolor("59 126 161") msize(tiny)) ///
+(pcarrowi `point_37_1980' 37 `point_37_2021' 37, lcolor("238 31 96") lwidth(thin) barbsize(0) msize(1) mcolor("238 31 96")) ///
+(pcarrowi `point_77_1980' 77 `point_77_2021' 77, lcolor("0 165 152") lwidth(thin) barbsize(0) msize(1) mcolor("0 165 152")) ///
+, ///
+title("U.S. homeownership in 1980 and 2021, by age", color("0 50 98") size(large) pos(11) justification(left)) ///
+subtitle("Homeownership rates (percentage of householders who own)", color("59 126 161") size(small) pos(11) justification(left)) ///
+xtitle("Age", color(gs6) margin(b-1 t-1)) xscale(lstyle(none)) ///
+xlabel(21 "21" 30 "30" 40 "40" 50 "50" 60 "60" 70 "70" 80 "80" 90 "90+", glcolor(gs9%0) labcolor(gs6) tlength(1.25) tlcolor(gs6%30)) xmtick(21(1)90, tlength(.75) tlcolor(gs9%30)) ///
+ytitle("") ///
+yscale(lstyle(none)) ///
+ylabel(.1 "10%" .2 "20%" .3 "30%" .4 "40%" .5 "50%" .6 "60%" .7 "70%" .8 "80%", angle(0) gmax gmin glpattern(solid) glcolor(gs9%15) glwidth(vthin) labcolor("59 126 161") labsize(2.5) tlength(0) tlcolor(gs9%15)) ///
+legend(off) ///
+note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato:U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
+caption("@jamesohawkins {fontface Lato:with} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
 text(`text1' 93 "1980", color("217 117 31") size(vsmall) placement(w) justification(right) orient(horizontal)) ///
 text(`text2' 93 "2021", color("59 126 161") size(vsmall) placement(w) justification(right) orient(horizontal)) ///
 text(`text_37' 37.25 "Decreases in home-" "ownership rates" "since 1980", color("238 31 96") size(vsmall) placement(ne) justification(left) orient(horizontal)) ///
@@ -135,7 +225,7 @@ graphregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(w
 plotregion(margin(0 0 0 0) fcolor(white) lcolor(white) lwidth(medium) ifcolor(white) ilcolor(white) ilwidth(medium)) ///
 graphregion(margin(r+8))
 cd "$output"
-graph export main_1980and2021.png, replace height(2500) width(3700)
+graph export main_1980and2021_labels.png, replace height(2500) width(3700)
 export delimited main_1980and2021.csv, replace
 
 
@@ -168,7 +258,7 @@ lab val age age_lbl
 
 // Additional formatting for graph
 gen asterisk = "*" if _pvalue < .05
-gen asterisk_pos = estimates - .0027
+gen asterisk_pos = estimates - .003
 
 // Visualization
 * graph notes
@@ -190,7 +280,7 @@ twoway (line estimates age, lcolor("0 176 218") lpattern(none) lwidth(thin) lcol
 (pcarrowi -.096 53.5 -.096 49, lcolor(gs10) lwidth(thin) barbsize(0) msize(1) mcolor(gs10)) ///
 (scatter asterisk_pos age if asterisk == "*", mlabel(asterisk) mlabcolor(white) mlabsize(small) mlabposition(0) msymbol(none)) ///
 , ///
-title("How much have homeownership rates changed since 1980?", color("0 50 98") size(large) pos(11) justification(left)) ///
+title("Changes in homeownership rates (1980-2021), by age", color("0 50 98") size(large) pos(11) justification(left)) ///
 subtitle("Percentage point (ppt) changes in homeownership rates between 1980 and 2021", color("59 126 161") size(small) pos(11) justification(left)) ///
 yline(0, lcolor("70 87 94") lpattern(dash)) ///
 xtitle("Age", color(gs6) margin(b-1 t-1)) xscale(lstyle(none)) ///
@@ -200,7 +290,7 @@ yscale(lstyle(none)) ///
 ylabel(-.15 "-15ppt" -.1 "-10ppt" -.05 "-5ppt" 0 "No change" .05 "+5ppt" .1 "+10ppt" .15 "+15ppt", angle(0) gmax gmin glpattern(solid) glcolor(gs9%15) glwidth(vthin) labcolor("59 126 161") labsize(2.5) tlength(0) tlcolor(gs9%15)) ///
 legend(off) ///
 note("Source: {fontface Lato:Author's analysis of IPUMS-USA.} Sample: {fontface Lato:U.S. householders age 21 or older.}" `notes', margin(l+1.5) color(gs7) span size(vsmall) position(7)) ///
-caption("@jamesohawkins {fontface Lato:on behalf of} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
+caption("@jamesohawkins {fontface Lato:with} youngamericans.berkeley.edu", margin(l+1.5 t-1) color(gs7%50) span size(vsmall) position(7)) ///
 text(.008 19.15 "Increases in homeownership" "rates since 1980", color("0 165 152") size(vsmall) placement(n) justification(center) orient(vertical)) ///
 text(-.008 19.15 "Decreases in homeownership" "rates since 1980", color("238 31 96") size(vsmall) placement(s) justification(center) orient(vertical)) ///
 text(-.096 54 "{it:Asterisk (*) denotes statistically significant change since 1980}", color(gs10) size(vsmall) placement(e) justification(left) orient(horizontal)) ///
